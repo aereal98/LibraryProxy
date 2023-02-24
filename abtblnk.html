@@ -1,0 +1,45 @@
+ </body>
+</html>
+</head>
+  <body>
+    <div class="console-container">
+      <div class="console">
+        <p>about:blank</p>
+        <div class="consolebody">
+          
+          <p class="console-input"><input id="url-target" value="" autocomplete="on" type="text" autofocus /></p>
+         
+        </div>
+      </div>
+      <div class="button-wrapper">
+        <button id="create" class="console-button">Create page</button>
+        <button class="console-button" onclick="document.getElementById('url-target').value = ''">Clear input</button>
+      </div>
+      <p> Just so you know this will not unblock only embed! Also you need to use https:// </p>
+    </div>
+    <script>
+      var url = document.getElementById("url-target");
+      var urlObj = new window.URL(window.location.href);
+      document.getElementById("create").onclick = function () {
+        if (url.value.substring(0, 8) !== "https://" && url.value.substring(0, 7) !== "http://") {
+          url.value = "https://" + url.value.split("https://").pop();
+        } else if (url.value.substring(0, 7) == "http://") {
+          url.value = "https://" + url.value.split("http://").pop();
+        }
+        win = window.open();
+        win.document.body.style.margin = "0";
+        win.document.body.style.height = "100vh";
+        var iframe = win.document.createElement("iframe");
+        iframe.style.border = "none";
+        iframe.style.width = "100%";
+        iframe.style.height = "100%";
+        iframe.style.margin = "0";
+        iframe.referrerpolicy = "no-referrer";
+        iframe.allow = "fullscreen";
+        iframe.src = url.value;
+        win.document.body.appendChild(iframe);
+        //var script = win.document.createElement("script");
+        //script.src = "https://3kh0.github.io/js/main.js";
+        //win.document.body.appendChild(script);
+      };
+    
